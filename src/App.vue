@@ -4,8 +4,8 @@
 </script>
 
 <template>
-  <h2>You did it</h2>
-  <Button label="Save" icon="pi pi-check" iconPos="right" />
+  <h2 class="text-5xl">You did it</h2>
+  <Button label="Save" />
 
   <BonTable />
 </template>

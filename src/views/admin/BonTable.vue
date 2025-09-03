@@ -10,7 +10,7 @@
 </script>
 
 <template>
-    <DataTable stripedRows showGridlines paginator :rows="10" :value=bonuri>
+    <DataTable class="mx-10" stripedRows showGridlines paginator :rows="10" :value=bonuri>
         <Column field="bon", header="ID"></Column>
         <Column field="ghiseu", header="Ghiseu"></Column>
         <Column field="descriere", header="Descriere"></Column>

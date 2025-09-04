@@ -7,10 +7,16 @@ export interface Ghiseu {
     activ: boolean
 }
 
+export interface Bon {
+    id: number,
+    idGhiseu: number,
+    stare: string
+}
+
 const GhiseuBaseURL = "http://localhost:5163/api/Ghiseu";
 const BonBaseURL = "http://localhost:5163/api/Bon"
 
-export class GhiseuAPI {
+export class APIService {
     static async GetAllGhisee(): Promise<Ghiseu[]> {
         const response = await fetch(`${GhiseuBaseURL}/GetAllGhisee`);
         if (!response.ok)
@@ -28,6 +34,15 @@ export class GhiseuAPI {
             },
             body: JSON.stringify(id)
         })
+        if (!response.ok)
+            throw new Error('Response status: ' + response.status);
+
+        const data = await response.json();
+        return data;
+    }
+
+    static async GetAllBonuri(): Promise<Bon[]> {
+        const response = await fetch(`${BonBaseURL}/GetAllBonuri`);
         if (!response.ok)
             throw new Error('Response status: ' + response.status);
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref} from 'vue';
-import { GhiseuAPI } from '@/services/ApiService';
+import { APIService } from '@/services/ApiService';
 import type { Ghiseu } from '@/services/ApiService';
 import GhiseuCard from '@/views/user/GhiseuCard.vue';
 
@@ -9,7 +9,7 @@ const ghisee = ref<Ghiseu[]>([]);
 onMounted(async () => {
     try
     {
-        ghisee.value = await GhiseuAPI.GetAllGhisee();
+        ghisee.value = await APIService.GetAllGhisee();
     }
     catch (error: any)
     {

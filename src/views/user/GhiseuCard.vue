@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Card, Button } from 'primevue';
-import { GhiseuAPI } from '@/services/ApiService';
+import { APIService } from '@/services/ApiService';
 import router from '@/router';
 const props = defineProps({
     id: {
@@ -12,7 +12,7 @@ const props = defineProps({
 })
 
 const creeareBon = async () => {
-    const bonId = await GhiseuAPI.CreeareBon(props.id);
+    const bonId = await APIService.CreeareBon(props.id);
     router.push({path: `/bonCreeat/${bonId}`});
 } 
 </script>

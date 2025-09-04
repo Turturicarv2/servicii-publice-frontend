@@ -49,4 +49,28 @@ export class APIService {
         const data = await response.json();
         return data;
     }
+
+    static async AsteptareBon(id: number) {
+        const response = await fetch(`${BonBaseURL}/MarkBonAsInProgress/${id}`, {
+            method: 'PATCH'
+        });
+        if (!response.ok)
+            throw new Error('Response status: ' + response.status);
+    }
+
+    static async PreluareBon(id: number) {
+        const response = await fetch(`${BonBaseURL}/MarkBonAsReceived/${id}`, {
+            method: 'PATCH'
+        });
+        if (!response.ok)
+            throw new Error('Response status: ' + response.status);
+    }
+
+    static async InchidereBon(id: number) {
+        const response = await fetch(`${BonBaseURL}/MarkBonAsClosed/${id}`, {
+            method: 'PATCH'
+        });
+        if (!response.ok)
+            throw new Error('Response status: ' + response.status);
+    }
 }

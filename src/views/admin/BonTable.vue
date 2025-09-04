@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import { Button } from 'primevue';
 
 import { APIService } from '@/services/ApiService';
 import { onMounted, ref } from 'vue';
@@ -28,14 +29,37 @@ onMounted(async () => {
         tabel.value.push(row);
     });
 })
+
+const bonInAsteptare = async (row: any) => {
+    await APIService.AsteptareBon(row.id);
+    row.stare = 'in asteptare';
+}
+
+const bonPreluat = async (row: any) => {
+    await APIService.PreluareBon(row.id);
+    row.stare = 'preluat';
+}
+
+const bonInchis = async (row: any) => {
+    await APIService.InchidereBon(row.id);
+    row.stare = 'inchis';
+}
 </script>
 
 <template>
+    <h2 class="text-2xl mx-10 mb-5">Tabela cu Bonuri:</h2>
     <DataTable class="mx-10" stripedRows showGridlines paginator :rows="10" :value=tabel>
         <Column field="id", header="ID"></Column>
         <Column field="denumire", header="Ghiseu"></Column>
         <Column field="descriere", header="Descriere"></Column>
         <Column field="stare", header="Stare"></Column>
+        <Column header="Actiuni">
+            <template #body="tabel">
+                <Button @click="bonInAsteptare(tabel.data)" label="In Asteptare" severity="warn" class="mr-5"></Button>
+                <Button @click="bonPreluat(tabel.data)" label="Preluat" class="mr-5"></Button>
+                <Button @click="bonInchis(tabel.data)" label="Inchis" severity="danger"></Button>
+            </template>
+        </Column>
     </DataTable>
 </template>
 

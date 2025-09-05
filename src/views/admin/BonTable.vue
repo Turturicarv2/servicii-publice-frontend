@@ -55,9 +55,9 @@ const bonInchis = async (row: any) => {
         <Column field="stare", header="Stare"></Column>
         <Column header="Actiuni">
             <template #body="tabel">
-                <Button @click="bonInAsteptare(tabel.data)" label="In Asteptare" severity="warn" class="mr-5"></Button>
-                <Button @click="bonPreluat(tabel.data)" label="Preluat" class="mr-5"></Button>
-                <Button @click="bonInchis(tabel.data)" label="Inchis" severity="danger"></Button>
+                <Button @click="bonInAsteptare(tabel.data)" v-if="tabel.data.stare !== 'in asteptare'" label="In Asteptare" severity="warn" class="mr-5"></Button>
+                <Button @click="bonPreluat(tabel.data)" v-if="tabel.data.stare !== 'preluat'" label="Preluat" class="mr-5"></Button>
+                <Button @click="bonInchis(tabel.data)" v-if="tabel.data.stare !== 'inchis'" label="Inchis" severity="danger"></Button>
             </template>
         </Column>
     </DataTable>

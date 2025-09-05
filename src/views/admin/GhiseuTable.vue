@@ -88,8 +88,8 @@ const openDialogCreeareGhiseu = () => {
             <InputText id="icon" class="flex-auto" v-model="formGhiseu.icon" autocomplete="off" />
         </div>
         <template #footer>
-            <Button label="Cancel" text severity="secondary" @click="visible = false" autofocus />
-            <Button label="Save" variant="outlined" @click="salvareGhiseu()" autofocus />
+            <Button label="Cancel" text severity="secondary" @click="visible = false" />
+            <Button label="Save" variant="outlined" @click="salvareGhiseu()" />
         </template>
     </Dialog>
     <DataTable class="mx-10" stripedRows showGridlines paginator :rows="10" :value="ghisee">
@@ -104,8 +104,8 @@ const openDialogCreeareGhiseu = () => {
         </Column>
         <Column header="Actiuni">
             <template #body="slotProps">
-                <Button label="Activare" severity="info" class="mr-5" @click="activareGhiseu(slotProps.data)"></Button>
-                <Button label="Dezactivare" severity="info" class="mr-5" @click="dezactivareGhiseu(slotProps.data)"></Button>
+                <Button label="Activare" v-if="!slotProps.data.activ" severity="info" class="mr-5" @click="activareGhiseu(slotProps.data)"></Button>
+                <Button label="Dezactivare" v-else severity="info" class="mr-5" @click="dezactivareGhiseu(slotProps.data)"></Button>
                 <Button label="Edit" class="mr-5" @click="openDialogEditareGhiseu(slotProps.data)"></Button>
                 <Button label="Delete" severity="danger" @click="stergereGhiseu(slotProps.data.id)"></Button>
             </template>

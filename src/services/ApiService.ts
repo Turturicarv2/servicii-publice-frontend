@@ -1,3 +1,5 @@
+import { icon } from "@primeuix/themes/aura/avatar";
+
 export interface Ghiseu {
     id: number,
     cod: string,
@@ -26,7 +28,7 @@ export class APIService {
         return data;
     }
 
-    static async CreeareBon(id: number) {
+    static async CreeareBon(id: number): Promise<number> {
         const response = await fetch(`${BonBaseURL}/CreateBon`, {
             method: "POST",
             headers: {
@@ -72,5 +74,56 @@ export class APIService {
         });
         if (!response.ok)
             throw new Error('Response status: ' + response.status);
+    }
+
+    static async ActivareGhiseu(id: number) {
+        const response = await fetch(`${GhiseuBaseURL}/MarkGhiseuAsActive/${id}`, {
+            method: 'PATCH'
+        });
+        if (!response.ok)
+            throw new Error('Response status: ' + response.status);
+    }
+
+    static async DezactivareGhiseu(id: number) {
+        const response = await fetch(`${GhiseuBaseURL}/MarkGhiseuAsInactive/${id}`, {
+            method: 'PATCH'
+        });
+        if (!response.ok)
+            throw new Error('Response status: ' + response.status);
+    }
+
+    static async StergereGhiseu(id: number) {
+        const response = await fetch(`${GhiseuBaseURL}/DeleteGhiseu/${id}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok)
+            throw new Error('Response status: ' + response.status);
+    }
+
+    static async EditareGhiseu(ghiseuNou: Ghiseu) {
+        const response = await fetch(`${GhiseuBaseURL}/UpdateGhiseu`, {
+            method: 'PUT',
+            body: JSON.stringify(ghiseuNou),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        if (!response.ok)
+            throw new Error('Response status: ' + response.status);
+    }
+
+    static async CreeareGhiseu(ghiseuNou: Ghiseu): Promise<number> {
+        const response = await fetch(`${GhiseuBaseURL}/AddGhiseu`, {
+            method: 'POST',
+            body: JSON.stringify({cod: ghiseuNou.cod, denumire: ghiseuNou.denumire, descriere: ghiseuNou.descriere, icon: ghiseuNou.icon}),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        if (!response.ok)
+            throw new Error('Response status: ' + response.status);
+
+        const data = await response.json();
+        return data;
     }
 }

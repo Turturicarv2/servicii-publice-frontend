@@ -8,7 +8,8 @@ const props = defineProps({
         required: true
     },
     cod: String,
-    denumire: String
+    denumire: String,
+    activ: Boolean
 })
 
 const creeareBon = async () => {
@@ -22,7 +23,8 @@ const creeareBon = async () => {
         <template #title>{{ props.cod }}</template>
         <template #subtitle>{{ props.denumire }}</template>
         <template #footer>
-            <Button label="Creeare Bon" @click="creeareBon"></Button>
+            <Button label="Creeare Bon" v-if="activ" @click="creeareBon"></Button>
+            <Button label="Ghiseu Inchis" v-else disabled severity="danger"></Button>
         </template>
     </Card>
 </template>

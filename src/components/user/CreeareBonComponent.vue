@@ -22,7 +22,7 @@ onMounted(async () => {
     <div class="flex flex-col mt-40">
         <h2 class="text-4xl text-center">Alege Ghiseul</h2>
         <div class="flex px-10 gap-8 flex-wrap justify-center mt-5">
-            <GhiseuCard v-for="ghiseu in ghisee" :cod="ghiseu.cod" :denumire="ghiseu.denumire" :id="ghiseu.id"></GhiseuCard>
+            <GhiseuCard v-for="ghiseu in ghisee" :cod="ghiseu.cod" :denumire="ghiseu.denumire" :id="ghiseu.id" :activ="ghiseu.activ"></GhiseuCard>
         </div>
     </div>
 </template>

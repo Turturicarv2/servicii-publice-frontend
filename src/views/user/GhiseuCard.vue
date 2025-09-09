@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Card, Button } from 'primevue';
-import { GhiseuAPI } from '@/services/ApiService';
+import { APIService } from '@/services/ApiService';
 import router from '@/router';
 const props = defineProps({
     id: {
@@ -8,11 +8,12 @@ const props = defineProps({
         required: true
     },
     cod: String,
-    denumire: String
+    denumire: String,
+    activ: Boolean
 })
 
 const creeareBon = async () => {
-    const bonId = await GhiseuAPI.CreeareBon(props.id);
+    const bonId = await APIService.CreeareBon(props.id);
     router.push({path: `/bonCreeat/${bonId}`});
 } 
 </script>
@@ -22,7 +23,8 @@ const creeareBon = async () => {
         <template #title>{{ props.cod }}</template>
         <template #subtitle>{{ props.denumire }}</template>
         <template #footer>
-            <Button label="Creeare Bon" @click="creeareBon"></Button>
+            <Button label="Creeare Bon" v-if="activ" @click="creeareBon"></Button>
+            <Button label="Ghiseu Inchis" v-else disabled severity="danger"></Button>
         </template>
     </Card>
 </template>

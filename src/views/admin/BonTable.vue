@@ -47,7 +47,7 @@ const bonInchis = async (row: any) => {
 </script>
 
 <template>
-    <h2 class="text-2xl mx-10 mb-5">Tabela cu Bonuri:</h2>
+    <h2 class="text-2xl mx-10 my-5">Tabela cu Bonuri:</h2>
     <DataTable class="mx-10" stripedRows showGridlines paginator :rows="10" :value=tabel>
         <Column field="id", header="ID"></Column>
         <Column field="denumire", header="Ghiseu"></Column>

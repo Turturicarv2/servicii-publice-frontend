@@ -23,7 +23,7 @@ const creeareBon = async () => {
         <template #title>{{ props.cod }}</template>
         <template #subtitle>{{ props.denumire }}</template>
         <template #footer>
-            <Button label="Creeare Bon" v-if="activ" @click="creeareBon"></Button>
+            <Button label="Eliberare Bon" v-if="activ" @click="creeareBon"></Button>
             <Button label="Ghiseu Inchis" v-else disabled severity="danger"></Button>
         </template>
     </Card>

@@ -52,6 +52,15 @@ export class APIService {
         return data;
     }
 
+    static async GetAllBonuriByGhiseuId(ghiseuId: string): Promise<Bon[]> {
+        const response = await fetch(`${BonBaseURL}/GetAllBonuriByGhiseuId/${ghiseuId}`);
+        if (!response.ok)
+            throw new Error('Response status: ' + response.status);
+
+        const data = await response.json();
+        return data;
+    }
+
     static async AsteptareBon(id: number) {
         const response = await fetch(`${BonBaseURL}/MarkBonAsInProgress/${id}`, {
             method: 'PATCH'

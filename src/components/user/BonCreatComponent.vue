@@ -2,7 +2,7 @@
 import { Button } from 'primevue';
 
 defineProps({
-    id: Number
+    id: String
 })
 </script>
 

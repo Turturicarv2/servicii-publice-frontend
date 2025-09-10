@@ -104,6 +104,9 @@ const openDialogCreeareGhiseu = () => {
         </Column>
         <Column header="Actiuni">
             <template #body="slotProps">
+                <RouterLink :to="`/admin/ghisee/${slotProps.data.id}`" :cod="slotProps.data.cod" :denumire="slotProps.data.denumire">
+                    <Button label="Vizualizare Bonuri" severity="warn" class="mr-5"></Button>
+                </RouterLink>
                 <Button label="Activare" v-if="!slotProps.data.activ" severity="info" class="mr-5" @click="activareGhiseu(slotProps.data)"></Button>
                 <Button label="Dezactivare" v-else severity="info" class="mr-5" @click="dezactivareGhiseu(slotProps.data)"></Button>
                 <Button label="Edit" class="mr-5" @click="openDialogEditareGhiseu(slotProps.data)"></Button>

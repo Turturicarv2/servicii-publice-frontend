@@ -14,7 +14,7 @@ const props = defineProps({
 
 const creeareBon = async () => {
     const bonId = await APIService.CreeareBon(props.id);
-    router.push({path: `/bonCreeat/${bonId}`});
+    router.push({path: `/user/bonCreeat/${bonId}`});
 } 
 </script>
 

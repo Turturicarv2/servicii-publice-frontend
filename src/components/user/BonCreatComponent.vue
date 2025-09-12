@@ -8,7 +8,7 @@ defineProps({
 
 <template>
     <div class="flex flex-col">
-        <RouterLink class="m-10" to="/">
+        <RouterLink class="m-10" to="/user">
             <Button label="< Home"></Button>
         </RouterLink>
 

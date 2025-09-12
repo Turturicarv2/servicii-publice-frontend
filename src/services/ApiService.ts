@@ -1,4 +1,5 @@
 import { icon } from "@primeuix/themes/aura/avatar";
+import axios, { type AxiosResponse } from "axios";
 
 export interface Ghiseu {
     id: number,
@@ -16,7 +17,8 @@ export interface Bon {
 }
 
 const GhiseuBaseURL = "http://localhost:5163/api/Ghiseu";
-const BonBaseURL = "http://localhost:5163/api/Bon"
+const BonBaseURL = "http://localhost:5163/api/Bon";
+const UserBaseURL = "http://localhost:5163/api/User";
 
 export class APIService {
     static async GetAllGhisee(): Promise<Ghiseu[]> {
@@ -134,5 +136,21 @@ export class APIService {
 
         const data = await response.json();
         return data;
+    }
+
+    static async CreareUser(username: string, password: string) {
+        const response = await axios.post(`${UserBaseURL}/CreateUser`, {
+            username: username,
+            password: password
+        });
+        return response;
+    }
+
+    static async LogareUser(username: string, password: string): Promise<AxiosResponse> {
+        const response = await axios.post(`${UserBaseURL}/LoginUser`, {
+            username: username,
+            password: password
+        });
+        return response;
     }
 }

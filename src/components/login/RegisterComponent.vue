@@ -5,10 +5,10 @@ import { Button } from 'primevue';
 
 const username = ref('');
 const password = ref('');
+const apiService = new APIService();
 
 const handleSubmit = async () => {
-    console.log(username.value, password.value);
-    const response = APIService.CreareUser(username.value, password.value);
+    const response = await apiService.CreareUser(username.value, password.value);
     console.log(response);
 }
 </script>

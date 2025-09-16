@@ -3,12 +3,14 @@ import { APIService } from '@/services/ApiService';
 import { ref } from 'vue';
 import { Button } from 'primevue';
 import router from '@/router';
+import { authStore } from '@/store/store';
 
 const username = ref('');
 const password = ref('');
+const apiService = new APIService();
 
 const handleSubmit = async () => {
-    const response = await APIService.LogareUser(username.value, password.value)
+    const response = await apiService.LogareUser(username.value, password.value)
         .catch(function (error) {
             console.log(error.response.data);
             console.log(error.response.status);
@@ -19,10 +21,11 @@ const handleSubmit = async () => {
         username.value = "";
         password.value = "";
         alert("Wrong username or password. Try again!");
-    } else if (response.data === "user") {
-        router.push("/user");
-    } else if (response.data === "admin") {
-        router.push("/admin");
+    } else {
+        const store = authStore();
+        store.login(response.data);
+        console.log(store.getToken());
+        router.push("/user")
     }
 }
 </script>

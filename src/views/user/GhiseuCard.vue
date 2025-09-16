@@ -12,8 +12,10 @@ const props = defineProps({
     activ: Boolean
 })
 
+const apiService = new APIService();
+
 const creeareBon = async () => {
-    const bonId = await APIService.CreeareBon(props.id);
+    const bonId = await apiService.CreeareBon(props.id);
     router.push({path: `/user/bonCreeat/${bonId}`});
 } 
 </script>

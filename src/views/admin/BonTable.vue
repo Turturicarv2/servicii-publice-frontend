@@ -11,10 +11,11 @@ import type { Bon, Ghiseu } from '@/services/ApiService';
 const bonuri = ref<Bon[]>([]);
 const ghisee = ref<Ghiseu[]>([]);
 const tabel = ref<any>([]);
+const apiService = new APIService();
 
 onMounted(async () => {
-    bonuri.value = await APIService.GetAllBonuri();
-    ghisee.value = await APIService.GetAllGhisee();
+    bonuri.value = await apiService.GetAllBonuri();
+    ghisee.value = await apiService.GetAllGhisee();
 
     bonuri.value.forEach(bon => {
         var ghiseuDenumire, ghiseuDescriere;
@@ -31,17 +32,17 @@ onMounted(async () => {
 })
 
 const bonInAsteptare = async (row: any) => {
-    await APIService.AsteptareBon(row.id);
+    await apiService.AsteptareBon(row.id);
     row.stare = 'in asteptare';
 }
 
 const bonPreluat = async (row: any) => {
-    await APIService.PreluareBon(row.id);
+    await apiService.PreluareBon(row.id);
     row.stare = 'preluat';
 }
 
 const bonInchis = async (row: any) => {
-    await APIService.InchidereBon(row.id);
+    await apiService.InchidereBon(row.id);
     row.stare = 'inchis';
 }
 </script>

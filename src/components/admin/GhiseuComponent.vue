@@ -13,10 +13,11 @@ const props = defineProps({
 
 const bonuri = ref<Bon[]>([]);
 const ghiseu = ref<Ghiseu>({id: 0, cod: "", denumire: "", descriere: "", icon: "", activ: false});
+const apiService = new APIService();
 
 onMounted(async () => {
-    bonuri.value = await APIService.GetAllBonuriByGhiseuId(props.id);
-    const ghisee = await APIService.GetAllGhisee();
+    bonuri.value = await apiService.GetAllBonuriByGhiseuId(props.id);
+    const ghisee = await apiService.GetAllGhisee();
 
     ghisee.forEach((row) => {
         if (row.id.toString() == props.id) {
@@ -26,17 +27,17 @@ onMounted(async () => {
 });
 
 const bonInAsteptare = async (row: any) => {
-    await APIService.AsteptareBon(row.id);
+    await apiService.AsteptareBon(row.id);
     row.stare = 'in asteptare';
 }
 
 const bonPreluat = async (row: any) => {
-    await APIService.PreluareBon(row.id);
+    await apiService.PreluareBon(row.id);
     row.stare = 'preluat';
 }
 
 const bonInchis = async (row: any) => {
-    await APIService.InchidereBon(row.id);
+    await apiService.InchidereBon(row.id);
     row.stare = 'inchis';
 }
 </script>

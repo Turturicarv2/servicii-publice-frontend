@@ -5,11 +5,12 @@ import type { Ghiseu } from '@/services/ApiService';
 import GhiseuCard from '@/views/user/GhiseuCard.vue';
 
 const ghisee = ref<Ghiseu[]>([]);
+const apiService = new APIService();
 
 onMounted(async () => {
     try
     {
-        ghisee.value = await APIService.GetAllGhisee();
+        ghisee.value = await apiService.GetAllGhisee();
     }
     catch (error: any)
     {

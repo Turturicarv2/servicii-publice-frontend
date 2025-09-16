@@ -9,22 +9,24 @@ const visible = ref(false);
 const formGhiseu = ref<Ghiseu>({id: 0, cod: '', denumire: '', descriere: '', icon: '', activ: false});
 var editedRow = ref<Ghiseu>({id: 0, cod: '', denumire: '', descriere: '', icon: '', activ: false});
 
+const apiService = new APIService();
+
 onMounted(async () => {
-    ghisee.value = await APIService.GetAllGhisee();
+    ghisee.value = await apiService.GetAllGhisee();
 });
 
 const activareGhiseu = async (row: any) => {
-    await APIService.ActivareGhiseu(row.id);
+    await apiService.ActivareGhiseu(row.id);
     row.activ = true;
 }
 
 const dezactivareGhiseu = async (row: any) => {
-    await APIService.DezactivareGhiseu(row.id);
+    await apiService.DezactivareGhiseu(row.id);
     row.activ = false;
 }
 
 const stergereGhiseu = async (id: number) => {
-    await APIService.StergereGhiseu(id);
+    await apiService.StergereGhiseu(id);
     ghisee.value = ghisee.value.filter(ghiseu => ghiseu.id != id);
 }
 
@@ -38,7 +40,7 @@ const salvareGhiseu = async () => {
     visible.value = false;
 
     if (formGhiseu.value.id !== 0) {
-        await APIService.EditareGhiseu(formGhiseu.value);
+        await apiService.EditareGhiseu(formGhiseu.value);
         
         editedRow.value.cod = formGhiseu.value.cod;
         editedRow.value.denumire = formGhiseu.value.denumire;
@@ -46,7 +48,7 @@ const salvareGhiseu = async () => {
         editedRow.value.icon = formGhiseu.value.icon;
     }
     else {
-        const ghiseuId = await APIService.CreeareGhiseu(formGhiseu.value);
+        const ghiseuId = await apiService.CreeareGhiseu(formGhiseu.value);
         console.log(ghiseuId);
         ghisee.value.push({
             id: ghiseuId, 
@@ -104,6 +106,9 @@ const openDialogCreeareGhiseu = () => {
         </Column>
         <Column header="Actiuni">
             <template #body="slotProps">
+                <RouterLink :to="`/admin/ghisee/${slotProps.data.id}`" :cod="slotProps.data.cod" :denumire="slotProps.data.denumire">
+                    <Button label="Vizualizare Bonuri" severity="warn" class="mr-5"></Button>
+                </RouterLink>
                 <Button label="Activare" v-if="!slotProps.data.activ" severity="info" class="mr-5" @click="activareGhiseu(slotProps.data)"></Button>
                 <Button label="Dezactivare" v-else severity="info" class="mr-5" @click="dezactivareGhiseu(slotProps.data)"></Button>
                 <Button label="Edit" class="mr-5" @click="openDialogEditareGhiseu(slotProps.data)"></Button>

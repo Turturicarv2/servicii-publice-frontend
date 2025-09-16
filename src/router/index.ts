@@ -1,6 +1,11 @@
-import AdminComponent from '@/components/admin/adminComponent.vue'
-import BonCreeatComponent from '@/components/user/BonCreeatComponent.vue'
-import CreeareBonComponent from '@/components/user/CreeareBonComponent.vue'
+import AdminComponent from '@/components/admin/AdminComponent.vue'
+import BonComponent from '@/components/admin/BonComponent.vue'
+import GhiseeComponent from '@/components/admin/GhiseeComponent.vue'
+import GhiseuComponent from '@/components/admin/GhiseuComponent.vue'
+import LoginComponent from '@/components/login/LoginComponent.vue'
+import RegisterComponent from '@/components/login/RegisterComponent.vue'
+import BonCreeatComponent from '@/components/user/BonCreatComponent.vue'
+import CreeareBonComponent from '@/components/user/CreareBonComponent.vue'
 import UserComponent from '@/components/user/UserComponent.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -9,6 +14,19 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      children: [
+        {
+          path: '',
+          component: LoginComponent
+        },
+        {
+          path: 'register',
+          component: RegisterComponent
+        }
+      ]
+    },
+    {
+      path: '/user',
       children: [
         {
           path: '',
@@ -27,7 +45,25 @@ const router = createRouter({
     },
     {
       path: '/admin',
-      component: AdminComponent
+      children: [
+        {
+          path: '',
+          component: AdminComponent,
+        },
+        {
+          path: 'bon',
+          component: BonComponent
+        },
+        {
+          path: 'ghisee',
+          component: GhiseeComponent
+        },
+        {
+          path: 'ghisee/:id',
+          component: GhiseuComponent,
+          props: true
+        }
+      ]
     }
   ],
 })

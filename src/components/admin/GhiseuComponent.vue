@@ -1,35 +1,30 @@
 <script setup lang="ts">
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import { Button } from 'primevue';
-
-import { APIService } from '@/services/ApiService';
+import { APIService, type Bon, type Ghiseu } from '@/services/ApiService';
+import Header from '@/views/admin/Header.vue';
 import { onMounted, ref } from 'vue';
+import { DataTable, Column, Button } from 'primevue';
 
-import type { Bon, Ghiseu } from '@/services/ApiService';
+const props = defineProps({
+    id: {
+        type: String,
+        required: true
+    }
+});
 
 const bonuri = ref<Bon[]>([]);
-const ghisee = ref<Ghiseu[]>([]);
-const tabel = ref<any>([]);
+const ghiseu = ref<Ghiseu>({id: 0, cod: "", denumire: "", descriere: "", icon: "", activ: false});
 const apiService = new APIService();
 
 onMounted(async () => {
-    bonuri.value = await apiService.GetAllBonuri();
-    ghisee.value = await apiService.GetAllGhisee();
+    bonuri.value = await apiService.GetAllBonuriByGhiseuId(props.id);
+    const ghisee = await apiService.GetAllGhisee();
 
-    bonuri.value.forEach(bon => {
-        var ghiseuDenumire, ghiseuDescriere;
-        ghisee.value.forEach(ghiseu => {
-            if (ghiseu.id === bon.idGhiseu){
-                ghiseuDenumire = ghiseu.denumire;
-                ghiseuDescriere = ghiseu.descriere;
-            }
-        });
-
-        var row = {id: bon.id, denumire: ghiseuDenumire, descriere: ghiseuDescriere, stare: bon.stare};
-        tabel.value.push(row);
-    });
-})
+    ghisee.forEach((row) => {
+        if (row.id.toString() == props.id) {
+            ghiseu.value = row;
+        }
+    })
+});
 
 const bonInAsteptare = async (row: any) => {
     await apiService.AsteptareBon(row.id);
@@ -48,12 +43,13 @@ const bonInchis = async (row: any) => {
 </script>
 
 <template>
-    <h2 class="text-2xl mx-10 my-5">Tabela cu Bonuri:</h2>
-    <DataTable class="mx-10" stripedRows showGridlines paginator :rows="10" :value=tabel>
+    <Header></Header>
+    <h1 class="ml-10 my-5 text-4xl">Bonuri pentru {{ ghiseu.cod }} {{ ghiseu.denumire }}:</h1>
+    <DataTable class="mx-10" stripedRows showGridlines paginator :rows="10" :value=bonuri>
         <Column field="id", header="Bon"></Column>
-        <Column field="denumire", header="Ghiseu"></Column>
-        <Column field="descriere", header="Descriere"></Column>
         <Column field="stare", header="Stare"></Column>
+        <Column field="createdAt", header="Creat La"></Column>
+        <Column field="modifiedAt", header="Modificat La"></Column>
         <Column header="Actiuni">
             <template #body="tabel">
                 <Button @click="bonInAsteptare(tabel.data)" v-if="tabel.data.stare !== 'in asteptare'" label="In Asteptare" severity="warn" class="mr-5"></Button>

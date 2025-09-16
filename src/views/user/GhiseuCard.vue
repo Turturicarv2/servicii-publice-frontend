@@ -12,9 +12,11 @@ const props = defineProps({
     activ: Boolean
 })
 
+const apiService = new APIService();
+
 const creeareBon = async () => {
-    const bonId = await APIService.CreeareBon(props.id);
-    router.push({path: `/bonCreeat/${bonId}`});
+    const bonId = await apiService.CreeareBon(props.id);
+    router.push({path: `/user/bonCreeat/${bonId}`});
 } 
 </script>
 
@@ -23,7 +25,7 @@ const creeareBon = async () => {
         <template #title>{{ props.cod }}</template>
         <template #subtitle>{{ props.denumire }}</template>
         <template #footer>
-            <Button label="Creeare Bon" v-if="activ" @click="creeareBon"></Button>
+            <Button label="Eliberare Bon" v-if="activ" @click="creeareBon"></Button>
             <Button label="Ghiseu Inchis" v-else disabled severity="danger"></Button>
         </template>
     </Card>
